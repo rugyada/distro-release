@@ -82,7 +82,7 @@ DistTag:	%{shorttag}%{distro_tag}
 # comment -- but it's something to keep in mind for 5.0)
 # QUI
 %if 0%am_i_cooker
-Release:	0.2.20
+Release:	0.2.21
 %else
 %if 0%am_i_rolling
 Release:	0.1.11
