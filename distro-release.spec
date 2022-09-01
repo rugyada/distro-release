@@ -42,7 +42,7 @@
 # The distro branch: Cooker, Community or Official
 %define distro_branch %{distrib}
 
-# The distro arch, notice: using %_target_cpu is bad
+# The distro arch, notice: using target cpu is bad
 # elsewhere because this depend of the config of the packager
 # _target_cpu => package build for
 # distro_arch => the distribution we are using
@@ -331,7 +331,6 @@ Suggests:	icedtea-web
 Suggests:	lxsession-lite
 # pinentry
 Suggests:	pinentry-qt5
-# %{_lib}qt5-output-driver
 Suggests:	libqt5gui-eglfs
 
 %description repos-pkgprefs
