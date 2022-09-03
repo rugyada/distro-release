@@ -82,9 +82,9 @@ DistTag:	%{shorttag}%{distro_tag}
 Release:	0.2.6
 %else
 %if 0%am_i_rolling
-Release:	0.1.14.1
+Release:	0.1.14.2
 %else
-Release:	2
+Release:	1
 %endif
 %endif
 License:	GPLv2+
