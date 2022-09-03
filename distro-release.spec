@@ -84,7 +84,7 @@ Release:	0.2.6
 %if 0%am_i_rolling
 Release:	0.1.14.1
 %else
-Release:	1
+Release:	2
 %endif
 %endif
 License:	GPLv2+
