@@ -1,13 +1,5 @@
 [Event/exitkde]
-Action=Sound
-Execute=
-Logfile=
-Sound=Oxygen-Sys-Log-Out.ogg
-TTS=
+Action=
 
 [Event/startkde]
-Action=Sound
-Execute=
-Logfile=
-Sound=Oxygen-Sys-Log-In.ogg
-TTS=
+Action=
