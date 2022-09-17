@@ -625,7 +625,7 @@ done
 
 install -m 0644 desktops/Plasma/metadata.desktop %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.defaultPanel/metadata.desktop
 install -m 0644 desktops/Plasma/metadata.desktop %{buildroot}%{_datadir}/kservices5/plasma-layout-template-org.openmandriva.plasma.desktop.defaultPanel.desktop
-install -m 0644 desktops/Plasma/org.kde.plasma.desktop-layout.js %{buildroot}%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/layout.js
+#install -m 0644 desktops/Plasma/org.kde.plasma.desktop-layout.js %{buildroot}%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/layout.js
 install -m 0644 desktops/Plasma/org.openmandriva.plasma.desktop.defaultPanel-layout.js %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.defaultPanel/contents/layout.js
 install -m 0644 desktops/Plasma/plasma-firstsetup.sh %{buildroot}%{_sysconfdir}/xdg/plasma-workspace/env/plasma-firstsetup.sh
 ln -sf %{_sysconfdir}/xdg/plasma-workspace/env/plasma-firstsetup.sh %{buildroot}%{_sysconfdir}/xdg/autostart-scripts/plasma-firstsetup.sh
