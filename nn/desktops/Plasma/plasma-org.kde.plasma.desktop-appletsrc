@@ -110,8 +110,6 @@ DialogWidth=1440
 AppletOrder=3;5;4;7;6;18;24;20
 
 [Containments][28]
-ItemGeometries-1440x900=
-ItemGeometriesHorizontal=
 activityId=
 formfactor=0
 immutability=1
