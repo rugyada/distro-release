@@ -619,7 +619,7 @@ mkdir -p %{buildroot}%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents
 mkdir -p %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.defaultPanel/contents
 mkdir -p %{buildroot}%{_datadir}/konsole
 
-for i in kcmdisplayrc kcmfonts kcminputrc kdeglobals kscreenlockerrc ksplashrc kwinrc plasmarc startupconfig startupconfigfiles kcm-about-distrorc ksmserverrc kiorc dolphinrc konsolerc klaunchrc discoverabstractnotifier.notifyrc plasma_workspace.notifyrc plasma-org.kde.plasma.desktop-appletsrc powermanagementprofilesrc; do
+for i in plasma-org.kde.plasma.desktop-appletsrc kcmdisplayrc kcmfonts kcminputrc kdeglobals kscreenlockerrc ksplashrc kwinrc plasmarc startupconfig startupconfigfiles kcm-about-distrorc ksmserverrc kiorc dolphinrc konsolerc klaunchrc discoverabstractnotifier.notifyrc plasma_workspace.notifyrc plasma-org.kde.plasma.desktop-appletsrc powermanagementprofilesrc; do
     install -m 0644 desktops/Plasma/$i %{buildroot}%{_sysconfdir}/xdg/$i
 done
 
