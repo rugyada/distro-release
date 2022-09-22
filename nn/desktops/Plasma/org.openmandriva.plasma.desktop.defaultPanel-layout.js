@@ -17,13 +17,12 @@ removeOldPanels()
 // start new panel
 var panel = new Panel
 if (panelIds.length == 1) {
-	// only one panel, so set the location for the user
+	// we have only one panel, so set the location for the user
 	panel.location = "bottom";
 }
 
 // let's calculate desired panel height based on scren's DPI
-// panel.height = gridUnit * 2.5
-panel.height = 2 * Math.floor(gridUnit * 2.5 / 2)
+panel.height = gridUnit * 3
 panel.alignment = "left";
 panel.hiding = "none";
 
@@ -32,7 +31,7 @@ var launcher = panel.addWidget("org.kde.plasma.kicker")
 launcher.currentConfigGroup = ["Shortcuts"]
 launcher.writeConfig("global", "Alt+F1")
 launcher.currentConfigGroup = ["General"]
-launcher.writeConfig("favorites", "preferred://browser,org.kde.dolphin.desktop,org.kde.konsole.desktop,systemsettings.desktop")
+launcher.writeConfig("favorites", "preferred://browser,org.kde.kmail.desktop,kcm_kdeconnect.desktop,org.kde.dolphin.desktop,org.kde.kate.desktop,org.kde.konsole.desktop,systemsettings.desktop")
 launcher.writeConfig("limitDepth", "false")
 launcher.writeConfig("useExtraRunners", "true")
 launcher.writeConfig("alignResultsToBottom", "true")
@@ -50,7 +49,7 @@ tasks.writeConfig("middleClickAction", "Close")
 tasks.writeConfig("onlyGroupWhenFull","true")
 tasks.writeConfig("groupingStrategy","1")
 tasks.writeConfig("highlightWindows","false")
-tasks.writeConfig("maxStripes","2")
+tasks.writeConfig("maxStripes","1")
 tasks.writeConfig("showOnlyCurrentDesktop","true")
 tasks.writeConfig("showOnlyCurrentScreen","false")
 tasks.writeConfig("showOnlyMinimized","false")
