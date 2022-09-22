@@ -15,6 +15,9 @@ location=0
 plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.image
 
+[Containments][25][Wallpaper][org.kde.image][General]
+Image=file:///usr/share/wallpapers/OpenMandriva/contents/images/2560x1600.png
+
 [Containments][26]
 activityId=
 formfactor=2
