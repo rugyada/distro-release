@@ -34,6 +34,7 @@ launcher.writeConfig("global", "Alt+F1")
 launcher.currentConfigGroup = ["General"]
 // launcher.writeConfig("favorites", "preferred://browser,org.kde.kmail.desktop,kcm_kdeconnect.desktop,org.kde.dolphin.desktop,org.kde.kate.desktop,org.kde.konsole.desktop,systemsettings.desktop")
 launcher.writeConfig("favoriteApps", "preferred://browser,org.kde.kmail.desktop,kcm_kdeconnect.desktop,,systemsettings.desktoporg.kde.dolphin.desktop,org.kde.konsole.desktop")
+launcher.writeConfig("favoriteSystemActions", "logout")
 launcher.writeConfig("limitDepth", "false")
 launcher.writeConfig("useExtraRunners", "true")
 launcher.writeConfig("alignResultsToBottom", "true")
