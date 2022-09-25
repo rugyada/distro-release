@@ -147,6 +147,7 @@ Size=32
 emoticonsTheme=Breeze
 
 [General]
+AllowKDEAppsToRememberWindowPositions=false
 BrowserApplication[$e]=org.kde.falkon.desktop
 TerminalApplication[$e]=konsole
 XftAntialias=true
