@@ -17,7 +17,7 @@ for( var j = 0; j < desktopsArray.length; j++) {
 	desktopsArray[j].writeConfig("arrangement","1")
 	desktopsArray[j].writeConfig("iconSize","4")
 	desktopsArray[j].currentConfigGroup = new Array("Wallpaper", "org.kde.image", "General")
-	desktopsArray[j].writeConfig("Image", "file:///usr/share/wallpapers/OpenMandriva/contents/images/default.png")
+	desktopsArray[j].writeConfig("Image", "file:///usr/share/mdk/backgrounds/default.png")
 	desktopsArray[j].writeConfig("FillMode","2")
 }
 
