@@ -1,20 +1,20 @@
+# COOKER
 # Please update release notes:
 # make -C SOURCES release-notes.{html,txt}
 #
-
 %bcond_with bootstrap
 
 %define new_distribution OpenMandriva Lx
 %define new_vendor OpenMandriva
 %define new_product OpenMandriva Lx
-# (tpg) use codename from here https://wiki.openmandriva.org/en/Codename
+# (tpg) use codename from here https://wiki.openmandriva.org/en/policies/codename
 %define new_codename Nickel
 %define vendor_tag %(echo %{new_vendor} |tr A-Z a-z)
 %define distribution_tag %(echo %{new_distribution} |tr A-Z a-z |sed -e 's,[ /!?],_,g')
 %define product_tag %(echo %{new_product} |tr A-Z a-z |sed -e 's,[ /!?],_,g')
 %define shorttag omv
 %define new_disturl http://openmandriva.org/
-%define new_bugurl http://issues.openmandriva.org/
+%define new_bugurl https://github.com/OpenMandrivaAssociation/distribution/issues/
 
 # QUI
 %define am_i_cooker 1
@@ -67,7 +67,7 @@
 
 Summary:	%{new_distribution} release file
 Name:		distro-release
-Version:	4.50
+Version:	4.90
 # (tpg) something needs to be done to make comparision 3.0 > 2015.0 came true
 # 3001 = 3.1
 # 3001 = 3.2 etc.
@@ -82,10 +82,10 @@ DistTag:	%{shorttag}%{distro_tag}
 # comment -- but it's something to keep in mind for 5.0)
 # QUI
 %if 0%am_i_cooker
-Release:	0.2.21
+Release:	0.2.22
 %else
 %if 0%am_i_rolling
-Release:	0.1.11
+Release:	0.1.15
 %else
 Release:	1
 %endif
@@ -102,26 +102,17 @@ Group:		System/Configuration/Other
 Summary:	%{new_distribution} release common files
 Group:		System/Configuration/Other
 BuildArch:	noarch
-%rename		rosa-release-common
 %rename		mandriva-release-common
 %rename		opemandriva-release-common
-%rename		moondrake-release-common
 %rename		mandriva-release
-%rename		mandriva-release-Free
-%rename		mandriva-release-One
-%rename		mandriva-release-Powerpack
-%rename		mandriva-release-Mini
-# (tpg) older releases provides %{_sysconfdir}/os-release
-Conflicts:	systemd < 37-5
+%rename		common-licenses
 Requires:	lsb-release
 Requires:	setup
 Requires:	filesystem
 # cf mdvbz#32631
 Provides:	arch(%{_target_cpu})
 Provides:	%{arch_tagged distro-release-common}
-# (tpg) get rid of it
-%rename		distro-release-Moondrake
-%rename		common-licenses
+
 %description common
 Common files for %{new_distribution} release packages.
 
@@ -148,6 +139,7 @@ Provides:	system-release(releasever) = %{version}
 %{_sysconfdir}/product.id.%{new_vendor}
 %{_sysconfdir}/version.%{vendor_tag}
 %{_sysconfdir}/os-release
+%{_prefix}/lib/os-release
 %{_sysconfdir}/release
 %{_sysconfdir}/product.id
 %{_sysconfdir}/version
@@ -163,15 +155,6 @@ Requires:	breeze
 Requires:	breeze-gtk
 Requires:	breeze-icons
 Requires:	noto-sans-fonts
-Provides:	kde4-config-file
-Provides:	distro-kde4-config-OpenMandriva = 2015.0
-Provides:	distro-kde4-config-OpenMandriva-common = 2015.0
-Obsoletes:	distro-kde4-config-OpenMandriva < 2015.0
-Obsoletes:	distro-kde4-config-OpenMandriva-common < 2015.0
-Provides:	mandriva-kde4-config = 2014.0
-Obsoletes:	mandriva-kde4-config < 2014.0
-Provides:	distro-kde4-config-common = 2015.0
-Obsoletes:	distro-kde4-config-common < 2015.0
 %rename		distro-plasma-config
 BuildArch:	noarch
 
@@ -203,7 +186,6 @@ Requires:	plymouth-theme-bgrt
 %rename		grub2-theme-common
 %rename		grub2-openmandriva-theme
 %rename		grub2-OpenMandriva-theme
-%rename		grub2-Moondrake-theme
 %rename		distro-theme-common
 %rename		distro-theme-extra
 %rename		distro-theme-screensaver
@@ -212,19 +194,19 @@ Requires:	plymouth-theme-bgrt
 %rename		distro-theme-OpenMandriva-grub2
 %rename		mandriva-theme-common
 %rename		mandriva-theme-extra
-%rename		mandriva-theme-Rosa-screensaver
 %rename		mandriva-screensaver
 %rename		mandriva-theme-screensave
-%rename		mandriva-theme-Moondrake
 %rename		mandriva-theme-OpenMandriva
 %rename		om-wallpapers-extra
+Obsoletes:	distro-theme-OpenMandriva < 0:1.4.46.2-2
 BuildArch:	noarch
 
 %description theme
 This package provides default themes for %{distribution}'s components:
- - grub
+ - bootloader/grub
  - screensaver
- - plymouth.
+ - plymouth
+ - wallpapers
 
 %package repos
 Summary:	%{new_vendor} package repositories
@@ -260,149 +242,100 @@ Group:		System/Base
 %rename	openmandriva-repos-pkgprefs
 # Preferences list is architecture independent
 BuildArch:	noarch
-
 ## Base packages
-
 # webfetch
 Suggests:	curl
-
 # webclient
 Suggests:	lynx
-
 %ifnarch %{armx} %{riscv}
 # bootloader
 Suggests:	grub2
 %endif
-
 # vim
 Suggests:	vim-enhanced
-
 # libEGL.so.1 (also provided by proprietary drivers)
 Suggests:	libegl1
 Suggests:	lib64egl1
-
 # libGL.so.1 (also provided by proprietary drivers)
 Suggests:	libgl1
 Suggests:	lib64gl1
-
 # Prefer openssh-askpass over openssh-askpass-gnome (for keychain)
 Suggests:	openssh-askpass
-
 # Python 3.x
 Suggests:	python
-
 # Initrd
 Suggests:	dracut
-
 ## Multimedia
-
 # festival-voice
 Suggests:	festvox-kallpc16k
-
 # gnome-speech-driver
 Suggests:	gnome-speech-driver-espeak
-
 # esound
 Suggests:	pulseaudio-esound-compat
-
 # gst-install-plugins-helper
 Suggests:	packagekit-gstreamer-plugin
-
 # libbaconvideowidget.so.0 (totem backend)
 Suggests:	libbaconvideowidget-gstreamer0
 Suggests:	lib64baconvideowidget-gstreamer0
-
 # phonon-backend: prefer phonon-vlc over phonon-gstreamer
 Suggests:	phonon-gstreamer
-
 # phonon4qt5-backend: prefer phonon4qt5-vlc over phonon4qt5-gstreamer
 Suggests:	phonon4qt5-gstreamer
-
 # mate backends
 Suggests:	mate-settings-daemon-pulse
 Suggests:	mate-media-pulse
-
 ## Devel
-
 # xemacs-extras provides ctags, prefer simple ctags
 Suggests:	ctags
-
 # prefer openssl-devel over libressl-devel
 Suggests:	libopenssl-devel
 Suggests:	lib64openssl-devel
-
 # preferred compiler(s)
 Suggests:	clang
-Suggests:	libstdc++-devel
-
-# prefer dnf-utils over urpmi-debuginfo-install
-Suggests:	dnf-utils
-
 ## Servers
-
 # sendmail-command and mail-server
 Suggests:	postfix
-
 # imap-server
 Suggests:	dovecot
-
 # webserver
 Suggests:	apache
-
 # nfs-server
 Suggests:	nfs-utils
-
 # ftpserver
 Suggests:	proftpd
-
 # postgresql
 Suggests:	libpq5
 Suggests:	lib64pq5
-
 # vnc
 Suggests:	tigervnc
-
 # x2goserver database backend
 Suggests:	x2goserver-sqlite
-
 ## Various
 # sane (also provided by saned)
 Suggests:	sane-backends
-
 # skanlite vs. xsane
 Suggests:	skanlite
-
 # virtual-notification-daemon
 Suggests:	notification-daemon
-
 # sgml-tools
 # (the other choice is linuxdoc-tools which requires docbook-utils anyway)
 Suggests:	docbook-utils
-
 # input method
 Suggests:	fcitx
-
 # drupal database storage
 Suggests:	drupal-mysql
-
 # polkit-agent
 Suggests:	polkit-kde-agent-1
-
 # java
 Suggests:	jre-current
 Suggests:	jdk-current
-
 # java-plugin
 Suggests:	icedtea-web
-
 Suggests:	lxsession-lite
-
 # pinentry
 Suggests:	pinentry-qt5
-
 # %{_lib}qt5-output-driver
-Suggests:	libqt5gui-x11
-Suggests:	lib64qt5gui-x11
+Suggests:	libqt5gui-eglfs
 
 %description repos-pkgprefs
 This package supplies DNF and PackageKit with global
@@ -413,7 +346,6 @@ Summary:	Macros and scripts for %{new_vendor} specific rpm behavior
 Group:		System/Configuration/Packaging
 License:	MIT
 Requires:	rpm >= 2:4.14.2-0
-Recommends:	systemd-macros
 BuildArch:	noarch
 %rename rpm-openmandriva-setup
 
@@ -423,24 +355,10 @@ Macros and scripts for %{new_vendor} specific rpm behavior.
 %package rpm-setup-build
 Summary:	Macros and scripts for %{new_vendor} specific rpmbuild behavior
 Group:		System/Configuration/Packaging
-Requires:	rpm-build >= 2:4.14.0-0
+%rename		rpm-openmandriva-setup-build
 # (tpg) do not use %%EVRD here, as it does not exist yet
 Requires:	%{name}-rpm-setup = %{version}-%{release}
-# Required for package builds to work
-Requires:	dwz
-Requires:	rpmlint
-Requires:	%{name}-rpmlint-policy
-Requires:	spec-helper >= 0.31.12
-Requires:	binutils
-Requires:	systemd-macros
-Requires:	rpm-helper
-# go and rust srpm macros are needed by mock/dnf builddep to
-# prevent unexpanded macros
-Requires:	go-srpm-macros
-Requires:	rust-srpm-macros
-# Ensure this exists in the build environment
-Requires:	/usr/bin/gdb-add-index
-%rename		rpm-openmandriva-setup-build
+Requires:	basesystem-build
 
 %description rpm-setup-build
 Macros and scripts for %{new_vendor} specific rpmbuild behavior.
@@ -489,7 +407,7 @@ Official rpmlint %{new_vendor} policy, install this if you
 want to produce RPMs for %{new_vendor}.
 
 # WARNING !!!
-# Keep it as last one as it sets EPOCH 
+# Keep it as last one as it sets EPOCH
 # desktop-common-data
 %package desktop
 Summary:	Desktop common files
@@ -506,19 +424,16 @@ Requires:	xdg-utils
 Requires:	run-parts
 Requires(post):	hicolor-icon-theme
 Requires:	hicolor-icon-theme
-Conflicts:	kdelibs-common < 30000000:3.5.2
-Conflicts:	kdebase-kdm-config-file < 1:3.2-62mdk
 Requires(post):	etcskel
 Requires(post):	run-parts
 Requires:	shared-mime-info
-Obsoletes:	menu-messages <= 2011.1
-Obsoletes:	desktop-common-data < 1:4.2-4
 %rename		mandrake_desk
 %rename		menu
 %rename		menu-xdg
 %rename		faces-openmandriva
 %rename		faces-icons
 %rename		desktop-common-data
+Obsoletes:	desktop-common-data < 1:4.2-4
 
 %description desktop
 This package contains useful icons, menu structure and others goodies for the
@@ -542,7 +457,6 @@ ln -sf release %{buildroot}%{_sysconfdir}/mandriva-release
 ln -sf release %{buildroot}%{_sysconfdir}/redhat-release
 ln -sf release %{buildroot}%{_sysconfdir}/mandrake-release
 ln -sf release %{buildroot}%{_sysconfdir}/mandrakelinux-release
-ln -sf release %{buildroot}%{_sysconfdir}/rosa-release
 ln -sf release %{buildroot}%{_sysconfdir}/system-release
 
 mkdir -p %{buildroot}%{_sysconfdir}/profile.d
@@ -601,6 +515,7 @@ cat >%{buildroot}%{_rpmmacrodir}/macros.%{new_vendor} <<EOF
 EOF
 
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
+mkdir -p %{buildroot}%{_prefix}/lib
 cat > %{buildroot}%{_sysconfdir}/sysconfig/system <<EOF
 SECURITY=3
 CLASS=beginner
@@ -616,7 +531,7 @@ cat >%{buildroot}%{_sysconfdir}/version.%{vendor_tag} <<EOF
 EOF
 
 # (tpg) follow standard specifications http://www.freedesktop.org/software/systemd/man/os-release.html
-cat >%{buildroot}%{_sysconfdir}/os-release <<EOF
+cat >%{buildroot}%{_prefix}/lib/os-release <<EOF
 NAME="%{new_distribution}"
 VERSION="%{version} (%{new_codename}) %{distrib}"
 ID="%{vendor_tag}"
@@ -633,7 +548,8 @@ SUPPORT_URL="https://forum.openmandriva.org"
 PRIVACY_POLICY_URL="https://www.openmandriva.org/tos"
 EOF
 
-ln -s os-release %{buildroot}%{_sysconfdir}/os-release.%{vendor_tag}
+ln -s %{_prefix}/lib/os-release %{buildroot}%{_sysconfdir}/os-release
+ln -s %{_prefix}/lib/os-release %{buildroot}%{_sysconfdir}/os-release.%{vendor_tag}
 ln -s %{vendor_tag}-release %{buildroot}%{_sysconfdir}/release
 ln -s product.id.%{new_vendor} %{buildroot}%{_sysconfdir}/product.id
 ln -s version.%{vendor_tag} %{buildroot}%{_sysconfdir}/version
@@ -645,11 +561,11 @@ cp -a common-licenses %{buildroot}%{_datadir}/
 
 ## Install backgrounds
 # User & root's backgrounds
-install -d -m 0755 %{buildroot}%{_datadir}/mdk/backgrounds/
+install -d -m 0755 %{buildroot}%{_datadir}/mdk/backgrounds
 
 # for easy access for users looking for wallpapers at expected location
-install -d %{buildroot}%{_datadir}/wallpapers
-ln -sr %{buildroot}%{_datadir}/mdk/backgrounds %{buildroot}%{_datadir}/wallpapers/mdk
+install -d -m 0755 %{buildroot}%{_datadir}/wallpapers
+ln -s %{_datadir}/mdk/backgrounds %{buildroot}%{_datadir}/wallpapers/mdk
 
 ## Install scripts
 install -d -m 0755 %{buildroot}/%{_bindir}/
@@ -675,12 +591,6 @@ install -m 0644 desktops/applications/*.desktop %{buildroot}%{_datadir}/applicat
 # icons
 install -d -m 0755 %{buildroot}%{_iconsdir}/hicolor/scalable/apps
 cp -a theme/icons/*.svg %{buildroot}%{_iconsdir}/hicolor/scalable/apps/
-
-#install theme for GDM/KDM
-install -d -m 0755 %{buildroot}/%{_datadir}/mdk/dm
-for i in desktops/dm/*.png desktops/dm/*.desktop desktops/dm/*.xml ; do
-  install -m 0644 $i %{buildroot}/%{_datadir}/mdk/dm/
-done
 
 # install bookmarks
 install -d -m 0755 %{buildroot}%{_datadir}/mdk/bookmarks/konqueror
@@ -727,12 +637,12 @@ install -m 0644 desktops/Plasma/Sonnet.conf %{buildroot}%{_sysconfdir}/xdg/KDE/S
 install -m 0644 desktops/Plasma/kdeglobals.sh %{buildroot}%{_sysconfdir}/xdg/plasma-workspace/env/kdeglobals.sh
 ln -sf %{_sysconfdir}/xdg/plasma-workspace/env/kdeglobals.sh %{buildroot}%{_sysconfdir}/xdg/autostart-scripts/kdeglobals.sh
 install -m 0644 desktops/Plasma/qtlogging.ini %{buildroot}%{_sysconfdir}/xdg/QtProject/qtlogging.ini
-install -m 0644 desktops/Plasma/OMV.profile %{buildroot}%{_datadir}/konsole/OMV.profile
+install -m 0644 desktops/Plasma/OM.profile %{buildroot}%{_datadir}/konsole/OM.profile
 mkdir -p %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.globalMenuPanel/contents
 install -m 0644 desktops/Plasma/org.openmandriva.plasma.desktop.globalMenuPanel-layout.js %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.globalMenuPanel/contents/layout.js
 install -m 0644 desktops/Plasma/metadata-globalMenu.desktop %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.globalMenuPanel/metadata.desktop
 mkdir -p %{buildroot}%{_datadir}/plasma/look-and-feel
-cp -a desktops/Plasma/org.openmandriva4.desktop %{buildroot}%{_datadir}/plasma/look-and-feel/org.openmandriva4.desktop
+cp -a desktops/Plasma/org.openmandriva5.desktop %{buildroot}%{_datadir}/plasma/look-and-feel/org.openmandriva5.desktop
 
 ### DESKTOP PLASMA END ###
 %endif
@@ -751,7 +661,8 @@ ln -s hicolor/scalable/apps/openmandriva.svg %{buildroot}%{_iconsdir}/
 # Default wallpaper should be available without browsing file system
 mkdir -p %{buildroot}%{_datadir}/wallpapers
 cp -a theme/backgrounds/*.*g %{buildroot}%{_datadir}/mdk/backgrounds
-cp -a theme/extra-backgrounds/*.*g %{buildroot}%{_datadir}/mdk/backgrounds
+cp -r theme/wallpapers/OpenMandriva %{buildroot}%{_datadir}/wallpapers
+[ ! -f %{buildroot}%{_datadir}/wallpapers/OpenMandriva/contents/images/2560x1600.png ] && printf '%s\n' "Default wallpaper file is missing!" && exit 1
 
 %if %am_i_cooker || %am_i_rolling
 # (tpg) add flavour name on the wallapaer
@@ -760,9 +671,11 @@ cp -a theme/extra-backgrounds/*.*g %{buildroot}%{_datadir}/mdk/backgrounds
 # convert -fill white -pointsize 20 -gravity center -draw "text 700,500 '%{distrib}'" %{buildroot}%{_datadir}/mdk/backgrounds/%{vendor}-4x3.png %{buildroot}%{_datadir}/mdk/backgrounds/%{vendor}-4x3.png
 # convert -fill white -pointsize 20 -gravity center -draw "text 500,370 '%{distrib}'" %{buildroot}%{_datadir}/mdk/backgrounds/%{vendor}-5x4.png %{buildroot}%{_datadir}/mdk/backgrounds/%{vendor}-5x4.png
 %endif
-ln -sf /usr/share/mdk/backgrounds/OpenMandriva-16x9.png %{buildroot}%{_datadir}/mdk/backgrounds/default.png
-ln -sf /usr/share/mdk/backgrounds/default.png %{buildroot}%{_datadir}/wallpapers/default.png
-ln -sf /usr/share/mdk/backgrounds/default.png %{buildroot}%{_datadir}/wallpapers/default.jpg
+
+ln -s %{_datadir}/wallpapers/OpenMandriva/contents/images/2560x1600.png %{buildroot}%{_datadir}/wallpapers/default.jpg
+ln -s %{_datadir}/wallpapers/OpenMandriva/contents/images/2560x1600.png %{buildroot}%{_datadir}/wallpapers/default.png
+ln -s %{_datadir}/wallpapers/OpenMandriva/contents/images/2560x1600.png %{buildroot}%{_datadir}/mdk/backgrounds/default.jpg
+ln -s %{_datadir}/wallpapers/OpenMandriva/contents/images/2560x1600.png %{buildroot}%{_datadir}/mdk/backgrounds/default.png
 
 mkdir -p %{buildroot}%{_datadir}/mdk/screensaver
 cp -a theme/screensaver/*.jpg %{buildroot}%{_datadir}/mdk/screensaver
@@ -793,26 +706,6 @@ GRUB_BACKGROUND=/boot/grub2/themes/%{vendor}/background.png
 GRUB_DISTRIBUTOR="%{distribution}"
 EOF
 %endif
-
-%if %am_i_cooker
-THEMEVER=cooker
-[ -d theme-$THEMEVER ] || THEMEVER=rolling
-%endif
-%if %am_i_rolling
-THEMEVER=rolling
-%endif
-%if ! %am_i_cooker && ! %am_i_rolling
-THEMEVER=$(echo %{version} |sed -e 's,\.,,g')
-%endif
-if [ -d theme-$THEMEVER ]; then
-	# Overwrite some stuff with version/branch specific artwork
-	cp -f theme-$THEMEVER/wallpapers/* %{buildroot}%{_datadir}/mdk/backgrounds/
-%ifnarch %{armx} %{riscv}
-	cp -f theme-$THEMEVER/plymouth/* %{buildroot}%{_datadir}/plymouth/themes/%{vendor}/
-	cp -f theme-$THEMEVER/grub/* %{buildroot}/boot/grub2/themes/%{vendor}/
-%endif
-	cp -f theme-$THEMEVER/splash-contents-previews/* %{buildroot}%{_datadir}/plasma/look-and-feel/org.openmandriva4.desktop/contents/previews/
-fi
 
 ### THEME END ###
 
@@ -1047,7 +940,7 @@ cp -a rpm/build/fedora/forge.lua %{buildroot}%{_rpmluadir}/fedora/srpm
 ### INSTALLER ###
 mkdir -p %{buildroot}%{_sysconfdir}/calamares/modules
 install -m644 installer/settings.conf %{buildroot}%{_sysconfdir}/calamares/settings.conf
-for i in bootloader.conf displaymanager.conf finished.conf fstab.conf grubcfg.conf keyboard.conf locale.conf machineid.conf mount.conf packages.conf partition.conf removeuser.conf services-systemd.conf shellprocess.conf umount.conf unpackfs.conf users.conf webview.conf welcome.conf ; do
+for i in bootloader.conf displaymanager.conf finished.conf fstab.conf grubcfg.conf keyboard.conf locale.conf machineid.conf mount.conf packages.conf partition.conf preservefiles.conf removeuser.conf services-systemd.conf shellprocess.conf umount.conf unpackfs.conf users.conf webview.conf welcome.conf ; do
     install -m644 installer/$i %{buildroot}%{_sysconfdir}/calamares/modules/$i
 done
 
@@ -1070,8 +963,8 @@ strings:
     bootloaderEntryName: "openmandriva"
     productUrl:          "%{new_disturl}"
     supportUrl:          "%{new_bugurl}"
-    knownIssuesUrl:      "https://wiki.openmandriva.org/en/releases/current"
-    releaseNotesUrl:     "https://wiki.openmandriva.org/en/releases/current"
+    knownIssuesUrl:      "https://wiki.openmandriva.org/en/distribution/releases/current"
+    releaseNotesUrl:     "https://wiki.openmandriva.org/en/distribution/releases/current"
 
 images:
     productLogo:         "%{_iconsdir}/hicolor/scalable/apps/openmandriva.svg"
@@ -1187,7 +1080,6 @@ sed -i -e "s/#PRODUCT_ID/$(cat /etc/product.id)/" -e "s/#LANG/${LC_NAME/[-_]*}/g
 %{_sysconfdir}/mandrake-release
 %{_sysconfdir}/mandriva-release
 %{_sysconfdir}/mandrakelinux-release
-%{_sysconfdir}/rosa-release
 %{_sysconfdir}/system-release
 %{_sysconfdir}/profile.d/10distro-release.sh
 %{_sysconfdir}/profile.d/10distro-release.csh
@@ -1203,33 +1095,35 @@ sed -i -e "s/#PRODUCT_ID/$(cat /etc/product.id)/" -e "s/#LANG/${LC_NAME/[-_]*}/g
 %{_datadir}/faces/user-default-mdk.png
 %dir %{_datadir}/mdk
 %dir %{_datadir}/mdk/faces
+%dir %{_datadir}/mdk/backgrounds
 %{_datadir}/mdk/faces/*.png
 %{_datadir}/applications/*.desktop
-%dir %{_datadir}/mdk/backgrounds
+%dir %{_datadir}/wallpapers
 %{_datadir}/wallpapers/mdk
 %dir %{_datadir}/mdk/bookmarks
 %dir %{_datadir}/mdk/bookmarks/konqueror
 %{_datadir}/mdk/bookmarks/konqueror/*.html
 %dir %{_datadir}/mdk/bookmarks/mozilla
 %{_datadir}/mdk/bookmarks/mozilla/*.html
-%{_datadir}/mdk/dm
 %{_iconsdir}/hicolor/scalable/apps/*.svg
 %{_iconsdir}/openmandriva.svg
 
 %if %{without bootstrap}
 %files desktop-Plasma
 %{_sysconfdir}/xdg/*
-%{_datadir}/konsole/OMV.profile
+%{_datadir}/konsole/OM.profile
 %{_datadir}/kservices5/plasma-layout-template-org.openmandriva.plasma.desktop.defaultPanel.desktop
 %{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.defaultPanel
 %{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/layout.js
 %{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.globalMenuPanel
-%{_datadir}/plasma/look-and-feel/org.openmandriva4.desktop
+%{_datadir}/plasma/look-and-feel/org.openmandriva5.desktop
 %endif
 
 %files theme
 %{_datadir}/mdk/backgrounds/*.*g
-%{_datadir}/wallpapers/default.*g
+%dir %{_datadir}/wallpapers/OpenMandriva
+%{_datadir}/wallpapers/OpenMandriva/*
+%{_datadir}/wallpapers/*.*g
 %{_iconsdir}/hicolor/scalable/apps/openmandriva.svg
 %{_iconsdir}/hicolor/*/apps/openmandriva.png
 %dir %{_datadir}/mdk/screensaver
@@ -1262,7 +1156,6 @@ sed -i -e "s/#PRODUCT_ID/$(cat /etc/product.id)/" -e "s/#LANG/${LC_NAME/[-_]*}/g
 
 %files rpm-setup-build
 %attr(755,root,root) %{_rpmconfigdir}/openmandriva/devel.prov
-%attr(755,root,root) %{_rpmconfigdir}/openmandriva/devel.req
 %attr(755,root,root) %{_rpmconfigdir}/openmandriva/kmod-deps.sh
 %{_rpmluadir}/fedora/common.lua
 %{_rpmluadir}/fedora/srpm/forge.lua
