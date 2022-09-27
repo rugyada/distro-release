@@ -1,3 +1,4 @@
+# ROME
 # Please update release notes:
 # make -C SOURCES release-notes.{html,txt}
 #
@@ -15,6 +16,7 @@
 %define new_disturl http://openmandriva.org/
 %define new_bugurl https://github.com/OpenMandrivaAssociation/distribution/issues
 
+# QUI
 %define am_i_cooker 0
 %define am_i_rolling 1
 %if %am_i_cooker
@@ -42,7 +44,7 @@
 # The distro branch: Cooker, Community or Official
 %define distro_branch %{distrib}
 
-# The distro arch, notice: using target cpu is bad
+# The distro arch, notice: using %_target_cpu is bad
 # elsewhere because this depend of the config of the packager
 # _target_cpu => package build for
 # distro_arch => the distribution we are using
@@ -78,11 +80,12 @@ DistTag:	%{shorttag}%{distro_tag}
 # Preferably, use 0.1.x for rolling, 0.2.x for cooker
 # (can't be done for 4.2 because already were at 0.8/0.3 before adding this
 # comment -- but it's something to keep in mind for 5.0)
+# QUI
 %if 0%am_i_cooker
-Release:	0.2.6
+Release:	0.2.22
 %else
 %if 0%am_i_rolling
-Release:	0.1.14.5
+Release:	0.1.15.1
 %else
 Release:	1
 %endif
@@ -331,6 +334,7 @@ Suggests:	icedtea-web
 Suggests:	lxsession-lite
 # pinentry
 Suggests:	pinentry-qt5
+# %{_lib}qt5-output-driver
 Suggests:	libqt5gui-eglfs
 
 %description repos-pkgprefs
@@ -619,7 +623,8 @@ mkdir -p %{buildroot}%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents
 mkdir -p %{buildroot}%{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.defaultPanel/contents
 mkdir -p %{buildroot}%{_datadir}/konsole
 
-for i in plasma-org.kde.plasma.desktop-appletsrc kcmdisplayrc kcmfonts kcminputrc kdeglobals kscreenlockerrc ksplashrc kwinrc plasmarc startupconfig startupconfigfiles kcm-about-distrorc ksmserverrc kiorc dolphinrc konsolerc klaunchrc discoverabstractnotifier.notifyrc plasma_workspace.notifyrc plasma-org.kde.plasma.desktop-appletsrc powermanagementprofilesrc; do
+# QUI
+for i in discoverabstractnotifier.notifyrc dolphinrc kcm-about-distrorc kcmdisplayrc kcmfonts kcminputrc kdeglobals kiorc klaunchrc konsolerc kscreenlockerrc ksmserverrc ksplashrc kwinrc plasma-org.kde.plasma.desktop-appletsrc plasma_workspace.notifyrc plasmarc powermanagementprofilesrc startupconfig startupconfigfiles; do
     install -m 0644 desktops/Plasma/$i %{buildroot}%{_sysconfdir}/xdg/$i
 done
 
@@ -1109,7 +1114,7 @@ sed -i -e "s/#PRODUCT_ID/$(cat /etc/product.id)/" -e "s/#LANG/${LC_NAME/[-_]*}/g
 %{_datadir}/konsole/OM.profile
 %{_datadir}/kservices5/plasma-layout-template-org.openmandriva.plasma.desktop.defaultPanel.desktop
 %{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.defaultPanel
-#%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/layout.js
+%{_datadir}/plasma/shells/org.kde.plasma.desktop/contents/layout.js
 %{_datadir}/plasma/layout-templates/org.openmandriva.plasma.desktop.globalMenuPanel
 %{_datadir}/plasma/look-and-feel/org.openmandriva5.desktop
 %endif
