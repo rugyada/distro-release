@@ -9,8 +9,8 @@ var desktopsArray = desktopsForActivity(currentActivity());
 for( var j = 0; j < desktopsArray.length; j++) {
 	desktopsArray[j].wallpaperPlugin = 'org.kde.image';
 	desktopsArray[j].wallpaperMode = 'SingleImage';
-	desktopsArray[j].writeConfig("plugin", "org.kde.desktopcontainment")
 	desktopsArray[j].currentConfigGroup = new Array("General")
+	desktopsArray[j].writeConfig("plugin", "org.kde.desktopcontainment")
 	desktopsArray[j].writeConfig("pressToMove",true)
 	desktopsArray[j].writeConfig("showToolbox",false)
 	desktopsArray[j].writeConfig("toolTips", true)
@@ -20,6 +20,9 @@ for( var j = 0; j < desktopsArray.length; j++) {
 	desktopsArray[j].currentConfigGroup = new Array("Wallpaper", "org.kde.image", "General")
 	desktopsArray[j].writeConfig("Image", "file:///usr/share/mdk/backgrounds/default.png")
 	desktopsArray[j].writeConfig("FillMode","2")
+	// desktopsArray[j].currentConfigGroup = new Array("plugin", "org.kde.desktopcontainment", "General")
+	// desktopsArray[j].currentConfigGroup = new Array("General")
+	//desktopsArray[j].writeConfig("plugin", "org.kde.desktopcontainment")
 }
 
 sleep(0.5)
