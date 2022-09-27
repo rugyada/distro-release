@@ -1,5 +1,5 @@
-[kdeglobals][KDE]
-widgetStyle=Breeze
+[kcminputrc][Mouse]
+cursorTheme=Breeze_Snow
 
 [kdeglobals][General]
 ColorScheme=BreezeLight
@@ -7,23 +7,26 @@ ColorScheme=BreezeLight
 [kdeglobals][Icons]
 Theme=breeze
 
-[plasmarc][Theme]
-name=breeze-dark
-
-[kcminputrc][Mouse]
-cursorTheme=Breeze_Snow
-
-[kwinrc][WindowSwitcher]
-LayoutName=org.kde.breeze.desktop
+[kdeglobals][KDE]
+widgetStyle=Breeze
 
 [kwinrc][DesktopSwitcher]
+LayoutName=org.kde.breeze.desktop
+
+[kwinrc][WindowSwitcher]
 LayoutName=org.kde.breeze.desktop
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.breeze
 
+[plasmarc][Theme]
+name=breeze-dark
+
 [Wallpaper]
 Image=OpenMandriva
 
-[KSplash]
+[ksplashrc][KSplash]
+Theme=org.openmandriva5.desktop
+
+[kscreenlockerrc][Greeter]
 Theme=org.openmandriva5.desktop
