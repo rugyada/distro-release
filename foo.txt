@@ -1,2 +1,45 @@
 imgs cooker theme
 ~20230221
+##########
+$ tree
+.
+├── desktops
+│   └── Plasma
+│       └── org.openmandriva5.desktop
+│           └── contents
+│               └── previews
+│                   ├── fullscreenpreview.jpg
+│                   ├── preview.png
+│                   └── splash.png
+└── theme
+    ├── backgrounds
+    │   ├── OpenMandriva-mobile.png
+    │   └── OpenMandriva-splash.png
+    ├── grub
+    │   └── OpenMandriva
+    │       └── background.png
+    ├── plymouth
+    │   └── OpenMandriva
+    │       ├── bg-background-1610.png
+    │       ├── bg-background-169.png
+    │       ├── bg-background-43.png
+    │       ├── bg-background-54.png
+    │       ├── motivo-1610.png
+    │       ├── motivo-169.png
+    │       ├── motivo-43.png
+    │       └── motivo-54.png
+    └── wallpapers
+        └── OpenMandriva
+            └── contents
+                ├── images
+                │   ├── 1280x1024.png
+                │   ├── 1920x1440.png
+                │   ├── 2048x1152.png
+                │   ├── 2560x1600.png
+                │   ├── 440x247.png
+                │   ├── 720x1440.png
+                │   └── OpenMandriva-splash.png
+                └── screenshot.png
+
+15 directories, 22 files
+#
