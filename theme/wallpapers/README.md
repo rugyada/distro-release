@@ -1,1 +1,0 @@
-OpenMandriva5 wallpapers
