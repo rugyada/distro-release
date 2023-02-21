@@ -27,7 +27,8 @@ $ tree
     │       ├── motivo-1610.png
     │       ├── motivo-169.png
     │       ├── motivo-43.png
-    │       └── motivo-54.png
+    │       ├── motivo-54.png
+    │       └── preview.png
     └── wallpapers
         └── OpenMandriva
             └── contents
@@ -41,5 +42,5 @@ $ tree
                 │   └── OpenMandriva-splash.png
                 └── screenshot.png
 
-15 directories, 22 files
+15 directories, 23 files
 #
