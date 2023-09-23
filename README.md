@@ -1,4 +1,4 @@
 # distro-release
-OM distro-release
+OM distro-release paro paro master
 
-### main branch
+### cooker branch
